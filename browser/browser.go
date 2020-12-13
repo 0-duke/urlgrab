@@ -5,6 +5,7 @@ import (
 	"github.com/chromedp/chromedp"
 	"github.com/chromedp/cdproto/page"
 	"urlgrab/utilities"
+	"time"
 )
 
 var GlobalContext context.Context
@@ -24,7 +25,7 @@ func GetRenderedSource(url string) string {
 
 	// navigate to a page, and get it's entire HTML
 	var outerHtml string
-
+	newCtx, _ = context.WithTimeout(newCtx, time.Second*20)
 	if err := chromedp.Run(newCtx,
 		chromedp.Navigate(url),
 		chromedp.OuterHTML("html", &outerHtml),
@@ -59,7 +60,7 @@ func GetGlobalContext(headless bool, proxy string) (context.Context, context.Can
 			chromedp.Flag("proxy-server", proxy),
 		)
 	}
-
+	
 	// create chrome instance
 	ctx, cancel := chromedp.NewContext(allocCtx,
 		chromedp.WithErrorf(utilities.Logger.Errorf),
