@@ -25,7 +25,7 @@ func GetRenderedSource(url string) string {
 
 	// navigate to a page, and get it's entire HTML
 	var outerHtml string
-	newCtx, _ = context.WithTimeout(newCtx, time.Second*20)
+	newCtx, _ = context.WithTimeout(newCtx, time.Second*60)
 	if err := chromedp.Run(newCtx,
 		chromedp.Navigate(url),
 		chromedp.OuterHTML("html", &outerHtml),
