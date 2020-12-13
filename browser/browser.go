@@ -3,6 +3,7 @@ package browser
 import (
 	"context"
 	"github.com/chromedp/chromedp"
+	"github.com/chromedp/cdproto/page"
 	"urlgrab/utilities"
 )
 
@@ -16,7 +17,7 @@ func GetRenderedSource(url string) string {
 	defer newCtxCancel()
 
 	// ensure the second tab is created
-	if err := chromedp.Run(newCtx); err != nil {
+	if err := chromedp.Run(newCtx, page.SetDownloadBehavior("deny")); err != nil {
 		newCtxCancel()
 		utilities.Logger.Fatal(err)
 	}
